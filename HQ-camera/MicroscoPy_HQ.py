@@ -31,9 +31,9 @@ saturation = 0 #start-up saturation
 
 ### serial communication with Arduino
 
-if KeyboardControl == True:
+if KeyboardControl:
         ser = serial.Serial('/dev/ttyACM0',57600) # type "ls /dev/tty*" to the terminal to check the serial port 
-        
+
 ### predefined motor speeds
 slow = 10
 medium = 100
@@ -54,31 +54,28 @@ recording_mode = False #Tab key toggles between the photo mode (start-up) and th
 recording = False #variable to set during recording
 
 def camera_reset():
-    global brightness, contrast, EV, saturation
-    brightness = 50 
-    camera.brightness = brightness
-    contrast= 0
-    camera.contrast = contrast
-    EV = 0
-    saturation = 0
-    camera.saturation = saturation
-    camera.exposure_compensation = 0
-    camera.sensor_mode = 0 # auto
-    if HighResolution == True:
-        camera.resolution = (4056, 3040) # Pi camera v2 max resolution, 8MP, 3280,2464, Pi HQ: 4056, 3040
-    else:
-        camera.resolution = (1920, 1080) # reduced resolution, Full HD or (2592 x 1944) for the 5MP camera v1
-    camera.rotation=180
-    camera.annotate_text_size = 100
-    camera.annotate_text = ""
-    camera.iso = 0
-    camera.shutter_speed = 0
-    camera.framerate = 30
-    camera.exposure_mode = 'auto'
-    camera.awb_mode = 'auto'
-    #camera.preview_fullscreen = False # optional
-    #camera.preview_window = (0, 50, 1280, 960) #optional
-    camera.start_preview()
+        global brightness, contrast, EV, saturation
+        brightness = 50
+        camera.brightness = brightness
+        contrast= 0
+        camera.contrast = contrast
+        EV = 0
+        saturation = 0
+        camera.saturation = saturation
+        camera.exposure_compensation = 0
+        camera.sensor_mode = 0 # auto
+        camera.resolution = (4056, 3040) if HighResolution == True else (1920, 1080)
+        camera.rotation=180
+        camera.annotate_text_size = 100
+        camera.annotate_text = ""
+        camera.iso = 0
+        camera.shutter_speed = 0
+        camera.framerate = 30
+        camera.exposure_mode = 'auto'
+        camera.awb_mode = 'auto'
+        #camera.preview_fullscreen = False # optional
+        #camera.preview_window = (0, 50, 1280, 960) #optional
+        camera.start_preview()
    
 
 def shortcuts(): # keyboard shortcuts
